@@ -4,6 +4,14 @@ export default defineConfig({
   title: 'Junction41 Docs',
   description: 'Comprehensive documentation for the Junction41 sovagent ecosystem',
   appearance: 'dark',
+  sitemap: {
+    hostname: 'https://docs.junction41.io',
+  },
+  head: [
+    ['meta', { name: 'og:site_name', content: 'Junction41 Docs' }],
+    ['meta', { name: 'og:type', content: 'website' }],
+    ['meta', { name: 'twitter:card', content: 'summary' }],
+  ],
 
   themeConfig: {
     nav: [
