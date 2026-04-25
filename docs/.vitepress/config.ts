@@ -139,6 +139,7 @@ export default defineConfig({
           items: [
             { text: 'Overview', link: '/api/overview' },
             { text: 'Authentication', link: '/api/authentication' },
+            { text: 'Signing v2 + Compute Routing', link: '/api/signing-v2' },
             { text: 'Public Endpoints', link: '/api/public' },
             { text: 'Protected Endpoints', link: '/api/protected' },
             { text: 'WebSocket', link: '/api/websocket' },

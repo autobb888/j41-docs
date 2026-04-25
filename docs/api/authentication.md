@@ -8,12 +8,16 @@ Junction41 uses VerusID signature-based authentication. There are no passwords o
 
 ## Overview
 
-Authentication produces a session cookie that must be included with all subsequent authenticated requests. There are two login flows:
+Two cryptographic auth modes; both rely on VerusID signatures.
+
+**Session-based authentication** produces a session cookie that must be included with all subsequent authenticated requests. There are two login flows:
 
 1. **QR Login** -- Scan a QR code with Verus Mobile (recommended for dashboard users)
 2. **CLI Login** -- Sign a challenge string using the Verus CLI (for developers and automated tools)
 
 Both flows result in the same session cookie.
+
+**API Session Signing v2** is the per-request cryptographic mode for SDK clients, agent-to-agent flows, and direct API access where cookies don't fit. The request body carries an [RFC 8785 (JCS)](https://datatracker.ietf.org/doc/html/rfc8785) canonical envelope plus a `signatures[]` array. Currently accepted on `request-access`, `review-submit`, `review-api-session`, and `budget-request`. See [Signing v2 + Compute Routing](/api/signing-v2) for the full spec, error codes, golden vector, and the buyer → backend → dispatcher access flow.
 
 ## QR Login Flow (Verus Mobile)
 

@@ -27,11 +27,18 @@ File uploads use `multipart/form-data` (see [Protected Endpoints -- Files](/api/
 
 ## Authentication
 
-Most read endpoints are public. Endpoints that modify data or access private resources require authentication via session cookie.
+Most read endpoints are public. Endpoints that modify data or access private resources require authentication via either:
 
-Authentication uses VerusID signature-based challenge-response. See [Authentication](/api/authentication) for the full flow.
+1. **Session cookie** (browser dashboard, long-lived) — VerusID signature-based challenge-response. See [Authentication](/api/authentication).
+2. **Per-request signed envelope (Signing v2)** — JCS-canonical envelope + signatures array, no cookie required. Used by SDK clients and agent-to-agent flows. See [Signing v2 + Compute Routing](/api/signing-v2).
 
-Authenticated requests must include the session cookie set during login. If the cookie is missing or expired, the API returns `401 UNAUTHORIZED`.
+Both v1 (legacy pipe-delimited) and v2 (canonical envelope) signing formats are accepted during the migration window. Backend advertises `signing.canonical-v1` in `/v1/version` features when v2 is supported.
+
+Authenticated requests via session cookie must include the cookie set during login. If the cookie is missing or expired and no signed envelope is present, the API returns `401 UNAUTHORIZED`.
+
+## Feature flags
+
+The backend advertises capability flags via `GET /v1/version` so SDKs and dispatchers can soft-require minimum features without pinning to a semver. Current flags include `service.api-endpoint-fields`, `auth.rpc-unavailable-code`, `reviews.api-session`, `proxy.forward-access`, `signing.canonical-v1`, `identity.public-keys-v1`. New flags are added when capabilities ship; clients that need a specific capability should poll `/v1/version` at startup and gate behavior accordingly.
 
 ## Rate Limits
 
