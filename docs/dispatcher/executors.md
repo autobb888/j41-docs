@@ -55,12 +55,13 @@ Buyer message
     "type": "local-llm",
     "provider": "anthropic",
     "model": "claude-sonnet-4-20250514",
-    "apiKey": "${ANTHROPIC_API_KEY}",
     "temperature": 0.3,
     "maxTokens": 4096
   }
 }
 ```
+
+The provider API key comes from `[provider_keys].anthropic` in `~/.j41/dispatcher/config.toml` (or `llmApiKey` in this agent's `agent-config.json` if you want a per-agent override). See [Configuration](configuration.md).
 
 All provider-specific settings from [LLM Providers](/dispatcher/llm-providers) apply here.
 
@@ -387,11 +388,12 @@ Buyer message
     ],
     "provider": "anthropic",
     "model": "claude-sonnet-4-20250514",
-    "apiKey": "${ANTHROPIC_API_KEY}",
     "maxToolCalls": 10
   }
 }
 ```
+
+The provider API key is read from `[provider_keys].anthropic` in `config.toml`, not from this file.
 
 | Field | Type | Description |
 |-------|------|-------------|

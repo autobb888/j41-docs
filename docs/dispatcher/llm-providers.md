@@ -12,38 +12,49 @@ The Dispatcher supports 22 LLM providers out of the box. Each sovagent can be co
 
 LLM provider settings can be specified at three levels (highest priority wins):
 
-1. **Per-agent** -- `executor` section in the agent's `profile.json`
-2. **Environment variables** -- `J41_LLM_PROVIDER`, `J41_LLM_API_KEY`, `J41_LLM_MODEL`, `J41_LLM_BASE_URL`
-3. **Global config** -- `config.json` defaults
+1. **Per-agent** -- `~/.j41/dispatcher/agents/<id>/agent-config.json` (mode 0600)
+2. **Runtime env-var override** -- `J41_LLM_PROVIDER`, `J41_LLM_MODEL`, `J41_LLM_BASE_URL`, `J41_LLM_API_KEY`
+3. **Global config** -- `~/.j41/dispatcher/config.toml` (`[llm]` and `[provider_keys]`)
 
-### Environment Variables
+The TOML file is the source of truth for global defaults. Env vars are intended for ops scenarios (CI, one-shot debugging) and override the matching TOML keys for the running process only. See [Configuration](configuration.md) for the full schema.
 
-| Variable | Required | Description |
+### Global Default (config.toml)
+
+```toml
+[llm]
+provider = "anthropic"
+model = "claude-sonnet-4-20250514"
+base_url = ""
+
+[provider_keys]
+anthropic = "sk-ant-..."
+```
+
+The provider key under `[provider_keys]` is forwarded to job containers via `docker run -e ANTHROPIC_API_KEY=…` per job. It never enters the dispatcher's own `process.env`.
+
+### Runtime Env-Var Override
+
+| Variable | TOML key | Description |
 |----------|----------|-------------|
-| `J41_LLM_PROVIDER` | Yes | Provider name (see table below) |
-| `J41_LLM_API_KEY` | Yes (most providers) | API key or access token |
-| `J41_LLM_MODEL` | No | Model name (uses provider default if omitted) |
-| `J41_LLM_BASE_URL` | No | Override the default API endpoint (useful for proxies, self-hosted, or Azure deployments) |
+| `J41_LLM_PROVIDER` | `llm.provider` | Provider name (see table below) |
+| `J41_LLM_MODEL` | `llm.model` | Model name (uses provider default if omitted) |
+| `J41_LLM_BASE_URL` | `llm.base_url` | Override the default API endpoint (useful for proxies, self-hosted, or Azure deployments) |
+| `J41_LLM_API_KEY` | `llm.api_key` | Generic fallback API key. Prefer `[provider_keys].<name>` instead so the key stays out of the dispatcher's `process.env`. |
 
 ### Per-Agent Override
 
-In `~/.j41/dispatcher/agents/<name>/profile.json`:
+In `~/.j41/dispatcher/agents/<id>/agent-config.json` (mode 0600):
 
 ```json
 {
-  "executor": {
-    "type": "local-llm",
-    "provider": "anthropic",
-    "model": "claude-sonnet-4-20250514",
-    "apiKey": "${ANTHROPIC_API_KEY}",
-    "baseUrl": "",
-    "temperature": 0.3,
-    "maxTokens": 4096
-  }
+  "executor": "local-llm",
+  "llmProvider": "anthropic",
+  "llmModel": "claude-sonnet-4-20250514",
+  "llmApiKey": "sk-ant-..."
 }
 ```
 
-The `${ENV_VAR}` syntax is expanded at runtime, so you never need to hardcode API keys in config files.
+When the dispatcher spawns a job container for this agent, the per-agent values are injected via `docker run -e`. Per-agent files are mode 0600 because they can hold an API key; the dispatcher's own process never reads the key into its environment.
 
 ---
 
@@ -249,7 +260,6 @@ Beyond the required settings, you can tune generation behavior per-agent:
     "type": "local-llm",
     "provider": "anthropic",
     "model": "claude-sonnet-4-20250514",
-    "apiKey": "${ANTHROPIC_API_KEY}",
     "temperature": 0.3,
     "maxTokens": 4096,
     "topP": 0.9,
