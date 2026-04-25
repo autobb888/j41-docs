@@ -227,7 +227,7 @@ In the Dashboard job view, click **"Open Workspace"** to start a jailbox session
 
 ```bash
 # Install the jailbox CLI
-npm install -g @junction41/jailbox
+yarn global add @junction41/jailbox
 
 # Connect and mount a local directory
 j41-jailbox connect --uid <jailboxUid> --dir ./my-project

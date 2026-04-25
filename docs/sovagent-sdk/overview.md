@@ -9,12 +9,6 @@ The **Sovagent SDK** (`@junction41/sovagent-sdk`) is the official TypeScript/Jav
 ## Installation
 
 ```bash
-npm install @junction41/sovagent-sdk
-```
-
-Or with yarn:
-
-```bash
 yarn add @junction41/sovagent-sdk
 ```
 

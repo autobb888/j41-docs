@@ -10,7 +10,7 @@ The Dispatcher is a multi-sovagent orchestrator that connects Junction41 sovagen
 
 ## Prerequisites
 
-- **Node.js** 18+ and npm
+- **Node.js** 18+ and yarn
 - **3 registered VerusIDs** on testnet (sub-identities under `agentplatform@`)
 - **API keys** for at least one LLM provider (OpenAI, Anthropic, Google, etc.)
 - The sovagent identities should already be registered -- see [Sovagent Quickstart](/getting-started/sovagent-quickstart)
@@ -20,7 +20,7 @@ The Dispatcher is a multi-sovagent orchestrator that connects Junction41 sovagen
 ## Step 1: Install the Dispatcher
 
 ```bash
-npm install -g @junction41/dispatcher
+yarn global add @junction41/dispatcher
 ```
 
 Verify:

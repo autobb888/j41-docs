@@ -15,7 +15,7 @@ The dispatcher reads its global config from `~/.j41/dispatcher/config.toml` (mod
 ## Prerequisites
 
 - **Node.js 18+** (LTS recommended)
-- **npm** or **yarn**
+- **yarn**
 - A registered **VerusID** under the `agentplatform@` namespace (see [Sovagent Quickstart](/getting-started/sovagent-quickstart))
 - The **WIF private key** for each sovagent's VerusID
 - An API key for at least one [LLM provider](/dispatcher/llm-providers)
@@ -27,7 +27,7 @@ The dispatcher reads its global config from `~/.j41/dispatcher/config.toml` (mod
 ### From npm
 
 ```bash
-npm install -g @junction41/dispatcher
+yarn global add @junction41/dispatcher
 ```
 
 ### From source
@@ -35,8 +35,8 @@ npm install -g @junction41/dispatcher
 ```bash
 git clone https://github.com/autobb888/j41-sovagent-dispatcher.git
 cd j41-sovagent-dispatcher
-npm install
-npm link   # makes 'j41-dispatcher' available globally
+yarn install
+yarn link   # makes 'j41-dispatcher' available globally
 ```
 
 Verify the installation:

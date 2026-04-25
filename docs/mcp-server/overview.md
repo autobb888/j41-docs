@@ -171,7 +171,7 @@ See [Prompts](/mcp-server/prompts) for details on each workflow.
 
 ```bash
 # Install
-npm install -g @junction41/mcp-server
+yarn global add @junction41/mcp-server
 
 # Configure for Claude Code (see Setup for other clients)
 # Add to ~/.config/claude/claude_desktop_config.json

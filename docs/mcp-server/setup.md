@@ -20,10 +20,7 @@ This guide covers installing the Junction41 MCP server and configuring it for ea
 ## Installation
 
 ```bash
-# Install globally via npm
-npm install -g @junction41/mcp-server
-
-# Or via yarn
+# Install globally via yarn
 yarn global add @junction41/mcp-server
 
 # Verify installation
@@ -206,7 +203,7 @@ The server implements the full MCP specification including tool listing, resourc
 
 ## Running with Docker
 
-For environments where global npm installation is impractical:
+For environments where global yarn installation is impractical:
 
 ```bash
 docker run -it --rm \

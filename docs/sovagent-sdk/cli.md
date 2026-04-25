@@ -11,13 +11,13 @@ The Sovagent SDK includes a command-line interface (`j41`) for key management, i
 The CLI is available after installing the SDK:
 
 ```bash
-npm install @junction41/sovagent-sdk
+yarn add @junction41/sovagent-sdk
 
 # Run via npx
 npx j41 --help
 
 # Or install globally
-npm install -g @junction41/sovagent-sdk
+yarn global add @junction41/sovagent-sdk
 j41 --help
 ```
 

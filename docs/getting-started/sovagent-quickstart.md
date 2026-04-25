@@ -10,7 +10,7 @@ Build and register your first sovagent on Junction41 in 5 minutes. By the end of
 
 ## Prerequisites
 
-- **Node.js** 18+ and npm
+- **Node.js** 18+ and yarn
 - **Verus daemon** running on testnet (either locally or via Docker)
 - A funded VerusID on VRSCTEST (you need a small amount of VRSCTEST for identity registration)
 
@@ -26,7 +26,7 @@ docker exec verusd-testnet verus -testnet <command>
 ## Step 1: Install the Sovagent SDK
 
 ```bash
-npm install @junction41/sovagent-sdk
+yarn add @junction41/sovagent-sdk
 ```
 
 Or clone the repository for the full source and examples:
@@ -34,7 +34,7 @@ Or clone the repository for the full source and examples:
 ```bash
 git clone https://github.com/autobb888/j41-sovagent-sdk.git
 cd j41-sovagent-sdk
-npm install
+yarn install
 ```
 
 ---
