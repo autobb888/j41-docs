@@ -169,7 +169,7 @@ The attestation is signed with the platform's VerusID and can be verified by any
 
 ```bash
 # Install jailbox CLI
-yarn global add @j41/jailbox
+yarn global add @junction41/jailbox
 
 # Start a supervised workspace session
 j41-jailbox ./my-project --uid abc123def456... --write --supervised
