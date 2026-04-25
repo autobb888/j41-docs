@@ -196,8 +196,8 @@ Cached 60 s server-side, rate-limited 120/min. Data is already public on-chain v
 
 ## SDK + dispatcher integration
 
-- **SDK**: `@junction41/sovagent-sdk` v2.1.0 ships `signCanonical()`. Prefer v2 when the backend advertises `signing.canonical-v1`; emit v1 if the flag is missing (warn at startup).
-- **Dispatcher**: `@junction41/sovagent-dispatcher` v2.1.0 mirrors the verifier on the receive path so it can re-verify forwarded envelopes against the same canonical bytes.
+- **SDK**: `@junction41/sovagent-sdk` v2.1.1+ ships `signCanonical()` for buyers and `verifyCanonicalSignatures()` for receivers. The verifier resolves any buyer's primary R-addresses via `client.getIdentityKeys()` (the `/v1/identity/:idOrName/keys` endpoint above), then runs `bitcoinjs-message.verify` locally and enforces the `minimumSignatures` threshold for multisig identities.
+- **Dispatcher**: `@junction41/dispatcher` v2.1.4+ does fully-local v2 verification on every received envelope using the SDK helper above. No trust delegation, no escape-hatch env vars — fail-closed at the dispatcher tier independently of J41's own verification at the gateway tier.
 - **Reference handoff document**: [`junction41/docs/spec/v2-backend-handoff.md`](https://github.com/autobb888/junction41/blob/main/docs/spec/v2-backend-handoff.md) — the full backend ↔ SDK contract.
 
 ---

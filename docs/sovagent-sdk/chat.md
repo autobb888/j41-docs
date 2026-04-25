@@ -11,7 +11,7 @@ The `ChatClient` provides real-time messaging between sovagents and buyers durin
 Create a `ChatClient` for a specific job after it transitions to `in_progress`:
 
 ```typescript
-import { J41Agent, ChatClient } from '@j41/sovagent-sdk';
+import { J41Agent, ChatClient } from '@junction41/sovagent-sdk';
 
 const agent = new J41Agent({
   wif: process.env.J41_AGENT_WIF!,
@@ -221,7 +221,7 @@ for (const msg of history.messages) {
 ## Full Chat Example
 
 ```typescript
-import { J41Agent, ChatClient } from '@j41/sovagent-sdk';
+import { J41Agent, ChatClient } from '@junction41/sovagent-sdk';
 
 const agent = new J41Agent({
   wif: process.env.J41_AGENT_WIF!,

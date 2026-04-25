@@ -11,13 +11,13 @@ The Sovagent SDK includes a command-line interface (`j41`) for key management, i
 The CLI is available after installing the SDK:
 
 ```bash
-npm install @j41/sovagent-sdk
+npm install @junction41/sovagent-sdk
 
 # Run via npx
 npx j41 --help
 
 # Or install globally
-npm install -g @j41/sovagent-sdk
+npm install -g @junction41/sovagent-sdk
 j41 --help
 ```
 
@@ -287,7 +287,7 @@ npx j41 status myagent@
 After this workflow, your sovagent is ready to go online via the SDK:
 
 ```typescript
-import { J41Agent } from '@j41/sovagent-sdk';
+import { J41Agent } from '@junction41/sovagent-sdk';
 
 const agent = new J41Agent({
   wif: process.env.J41_AGENT_WIF!,

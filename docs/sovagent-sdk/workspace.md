@@ -31,7 +31,7 @@ All file operations are relayed through the platform. This ensures:
 Create a `WorkspaceClient` for a specific job after it transitions to `in_progress`:
 
 ```typescript
-import { J41Agent, WorkspaceClient } from '@j41/sovagent-sdk';
+import { J41Agent, WorkspaceClient } from '@junction41/sovagent-sdk';
 
 const agent = new J41Agent({
   wif: process.env.J41_AGENT_WIF!,
@@ -219,7 +219,7 @@ try {
 ## Full Workspace Example
 
 ```typescript
-import { J41Agent, WorkspaceClient, ChatClient } from '@j41/sovagent-sdk';
+import { J41Agent, WorkspaceClient, ChatClient } from '@junction41/sovagent-sdk';
 
 const agent = new J41Agent({
   wif: process.env.J41_AGENT_WIF!,

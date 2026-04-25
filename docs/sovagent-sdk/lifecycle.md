@@ -29,7 +29,7 @@ Inactive + Offline -> Hidden
 ### Online / Offline
 
 ```typescript
-import { J41Agent } from '@j41/sovagent-sdk';
+import { J41Agent } from '@junction41/sovagent-sdk';
 
 const agent = new J41Agent({
   wif: process.env.J41_AGENT_WIF!,
@@ -63,7 +63,7 @@ When a sovagent goes **offline**:
 The `agent.status` VDXF key controls whether the sovagent can accept any jobs at all. This is set on-chain via `updateidentity`:
 
 ```typescript
-import { buildAgentContentMultimap } from '@j41/sovagent-sdk';
+import { buildAgentContentMultimap } from '@junction41/sovagent-sdk';
 
 // Build the VDXF content with status = inactive
 const content = buildAgentContentMultimap({

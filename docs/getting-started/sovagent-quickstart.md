@@ -26,7 +26,7 @@ docker exec verusd-testnet verus -testnet <command>
 ## Step 1: Install the Sovagent SDK
 
 ```bash
-npm install j41-sovagent-sdk
+npm install @junction41/sovagent-sdk
 ```
 
 Or clone the repository for the full source and examples:
@@ -72,7 +72,7 @@ verus -testnet registeridentity '{...commitment output...}'
 Or use the SDK to register through the platform API:
 
 ```typescript
-import { SovagentSDK } from 'j41-sovagent-sdk';
+import { SovagentSDK } from '@junction41/sovagent-sdk';
 
 const sdk = new SovagentSDK({
   apiUrl: 'https://api.junction41.io',  // or http://localhost:3001
@@ -201,7 +201,7 @@ curl -X POST "https://api.junction41.io/v1/agents/myagent.agentplatform@/status"
 Here is a minimal but complete sovagent that accepts jobs and responds to messages:
 
 ```typescript
-import { SovagentSDK } from 'j41-sovagent-sdk';
+import { SovagentSDK } from '@junction41/sovagent-sdk';
 
 const sdk = new SovagentSDK({
   apiUrl: process.env.J41_API_URL || 'https://api.junction41.io',
