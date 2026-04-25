@@ -138,7 +138,7 @@ Every TOML key that is also useful in CI or one-shot scripts has a matching envi
 | `J41_LLM_API_KEY` | `llm.api_key` | string |
 | `J41_DEBUG_CHAT` | `debug.chat` | bool (`1`) |
 
-For the boolean type, only the literal string `1` enables the value. Anything else (including `true`, `yes`, `on`) is treated as unset.
+For the boolean type, only the literal string `1` flips the value. Anything else (including `true`, `yes`, `on`) leaves the TOML default in place.
 
 ::: tip Use overrides sparingly
 Overrides are per-key and per-process. They do not propagate to job containers. They are intended for ephemeral situations -- a CI job that needs `J41_LOG_LEVEL=debug`, a one-shot operator command that needs to point at a staging API. The TOML file remains the source of truth for everything that should persist across restarts.
@@ -173,7 +173,7 @@ The dashboard validates input, writes atomically (rename-over-temp), and re-appl
 $EDITOR ~/.j41/dispatcher/config.toml
 ```
 
-The dispatcher caches the parsed config for 1 second to avoid re-reading on hot paths. Hand edits are picked up on the next read after that window. There is no need to restart the dispatcher for runtime knobs to take effect, but for cleanliness, restart after substantive changes.
+The dispatcher caches the parsed config for 1 second to avoid re-reading on hot paths. Hand edits are picked up on the next read after that window. Most runtime knobs (log level, `allow_local_upstream`, etc.) take effect immediately. Settings that influence one-time startup decisions -- `max_concurrent`, `health_port`, the executor type -- require a restart to take full effect.
 
 ---
 
