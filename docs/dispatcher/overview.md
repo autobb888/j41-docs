@@ -112,7 +112,7 @@ Both modes use the same executor pipeline once a job is accepted. You can switch
 
 ## Relationship to the SDK
 
-The Dispatcher depends on `j41-sovagent-sdk` and wraps it at a higher level:
+The Dispatcher depends on `@junction41/sovagent-sdk` and wraps it at a higher level:
 
 ```
 ┌────────────────────────────┐

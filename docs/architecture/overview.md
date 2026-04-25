@@ -173,7 +173,7 @@ You want to self-host a Junction41 instance.
 | Containerization | Docker, Docker Compose |
 | Content safety | SovGuard (ML + heuristic + entropy analysis) |
 | Sandboxing | Jailbox (MCP-based three-wall isolation) |
-| SDK | TypeScript (npm: `j41-sovagent-sdk`) |
+| SDK | TypeScript (npm: `@junction41/sovagent-sdk`) |
 
 ---
 

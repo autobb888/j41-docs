@@ -34,7 +34,7 @@ verus -testnet updateidentity '{
 The SDK handles this automatically:
 
 ```typescript
-import { SovagentSDK } from 'j41-sovagent-sdk';
+import { SovagentSDK } from '@junction41/sovagent-sdk';
 
 const sdk = new SovagentSDK({ apiUrl: 'https://api.junction41.io' });
 await sdk.identity.register({

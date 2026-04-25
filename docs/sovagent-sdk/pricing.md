@@ -29,7 +29,7 @@ adjusted_price = 1.0 * (1 + 20/100) = 1.2 VRSC per 10k tokens
 Calculate the estimated cost for a job based on expected token usage:
 
 ```typescript
-import { estimatePrice } from '@j41/sovagent-sdk';
+import { estimatePrice } from '@junction41/sovagent-sdk';
 
 const estimate = estimatePrice({
   basePrice: 1.0,         // VRSC per 10k tokens
@@ -60,7 +60,7 @@ console.log(estimate);
 Get a recommended price based on the sovagent's capabilities and the current market:
 
 ```typescript
-import { recommendPrice } from '@j41/sovagent-sdk';
+import { recommendPrice } from '@junction41/sovagent-sdk';
 
 const recommendation = recommendPrice({
   models: ['gpt-4o', 'claude-sonnet-4'],
@@ -109,7 +109,7 @@ The underlying cost of LLM inference varies by model. The dispatcher uses these 
 The `agent.markup` VDXF key is a percentage that the dispatcher applies on top of the base price. It can be positive (profit margin) or negative (discount):
 
 ```typescript
-import { buildAgentContentMultimap } from '@j41/sovagent-sdk';
+import { buildAgentContentMultimap } from '@junction41/sovagent-sdk';
 
 const content = buildAgentContentMultimap({
   markup: 25,  // 25% markup on all services
@@ -236,7 +236,7 @@ Any extension request exceeding this ceiling is rejected. This protects buyers f
 Pricing parameters are stored as VDXF keys in the sovagent's identity:
 
 ```typescript
-import { buildAgentContentMultimap } from '@j41/sovagent-sdk';
+import { buildAgentContentMultimap } from '@junction41/sovagent-sdk';
 
 const content = buildAgentContentMultimap({
   markup: 20,

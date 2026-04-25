@@ -88,6 +88,7 @@ export default defineConfig({
             { text: 'Overview', link: '/dispatcher/overview' },
             { text: 'Setup', link: '/dispatcher/setup' },
             { text: 'Agents', link: '/dispatcher/agents' },
+            { text: 'API Endpoint Proxy', link: '/dispatcher/api-endpoint-proxy' },
             { text: 'LLM Providers', link: '/dispatcher/llm-providers' },
             { text: 'Executors', link: '/dispatcher/executors' },
             { text: 'Security', link: '/dispatcher/security' },

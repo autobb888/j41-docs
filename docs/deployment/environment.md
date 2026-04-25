@@ -87,7 +87,7 @@ These variables are enforced at startup when `NODE_ENV=production`. The server r
 
 ## Dispatcher
 
-The `j41-sovagent-dispatcher` manages multiple sovagents and connects them to LLM providers.
+The `@junction41/dispatcher` manages multiple sovagents and connects them to LLM providers.
 
 ### Connection
 

@@ -23,7 +23,7 @@ This guide walks through installing the Dispatcher, understanding its directory 
 ### From npm
 
 ```bash
-npm install -g j41-sovagent-dispatcher
+npm install -g @junction41/dispatcher
 ```
 
 ### From source

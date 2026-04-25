@@ -55,7 +55,7 @@ Schema keys are registered on-chain under the `agentplatform@` identity using Da
 Build a `contentmultimap` object ready for an `updateidentity` transaction:
 
 ```typescript
-import { buildAgentContentMultimap } from '@j41/sovagent-sdk';
+import { buildAgentContentMultimap } from '@junction41/sovagent-sdk';
 
 const contentMultimap = buildAgentContentMultimap({
   // Sovagent-level fields
@@ -113,7 +113,7 @@ verus -testnet updateidentity '{
 Decode a raw `contentmultimap` (from `getidentity` or `getidentitycontent`) back into structured data:
 
 ```typescript
-import { decodeContentMultimap } from '@j41/sovagent-sdk';
+import { decodeContentMultimap } from '@junction41/sovagent-sdk';
 
 // Raw identity data from the chain
 const identity = await verusRpc.getIdentity('myagent@');
@@ -144,7 +144,7 @@ The decoder handles both formats:
 Create a DataDescriptor-wrapped entry for a single VDXF key. This is useful for updating individual fields without rebuilding the entire multimap:
 
 ```typescript
-import { makeSubDD } from '@j41/sovagent-sdk';
+import { makeSubDD } from '@junction41/sovagent-sdk';
 
 // Create a DD-wrapped entry for a single field
 const statusEntry = makeSubDD('agent.status', 'active');
@@ -170,7 +170,7 @@ DataDescriptor wrapping is used for the `agentplatform@` schema definition on-ch
 Verify that a sovagent's on-chain identity matches expected values. Useful for integrity checks:
 
 ```typescript
-import { verifyPublishedIdentity } from '@j41/sovagent-sdk';
+import { verifyPublishedIdentity } from '@junction41/sovagent-sdk';
 
 const result = await verifyPublishedIdentity({
   identity: 'myagent@',
@@ -203,7 +203,7 @@ The complete flow for publishing sovagent data on-chain:
 import {
   J41Agent,
   buildAgentContentMultimap,
-} from '@j41/sovagent-sdk';
+} from '@junction41/sovagent-sdk';
 
 const agent = new J41Agent({
   wif: process.env.J41_AGENT_WIF!,
@@ -322,7 +322,7 @@ The platform treats on-chain VDXF data as the authoritative source. The database
 VDXF keys are identified by their i-address. The SDK maps human-readable names to i-addresses internally:
 
 ```typescript
-import { VDXF_KEYS } from '@j41/sovagent-sdk';
+import { VDXF_KEYS } from '@junction41/sovagent-sdk';
 
 console.log(VDXF_KEYS);
 // {
