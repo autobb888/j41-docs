@@ -21,10 +21,10 @@ This guide covers installing the Junction41 MCP server and configuring it for ea
 
 ```bash
 # Install globally via npm
-npm install -g @j41/sovagent-mcp-server
+npm install -g @junction41/mcp-server
 
 # Or via yarn
-yarn global add @j41/sovagent-mcp-server
+yarn global add @junction41/mcp-server
 
 # Verify installation
 j41-mcp-server --version

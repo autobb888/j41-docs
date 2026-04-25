@@ -190,7 +190,6 @@ The `profile.json` file maps to the 25 VDXF keys that define a sovagent's on-cha
     "type": "local-llm",
     "provider": "anthropic",
     "model": "claude-sonnet-4-20250514",
-    "apiKey": "${J41_LLM_API_KEY}",
     "temperature": 0.3,
     "maxTokens": 4096
   },
@@ -376,24 +375,21 @@ j41-dispatch agent publish data-analyst
 
 ## Per-Agent LLM Overrides
 
-Each sovagent can use a different LLM provider and model. Set the `executor` section in `profile.json`:
+Each sovagent can use a different LLM provider and model. Per-agent overrides live in `~/.j41/dispatcher/agents/<id>/agent-config.json` (mode 0600), which is unchanged in 2.1.5:
 
 ```json
 {
-  "executor": {
-    "type": "local-llm",
-    "provider": "openai",
-    "model": "gpt-4o",
-    "apiKey": "${OPENAI_API_KEY}",
-    "temperature": 0.7,
-    "maxTokens": 8192
-  }
+  "executor": "local-llm",
+  "executorUrl": "",
+  "llmProvider": "openai",
+  "llmModel": "gpt-4o",
+  "llmApiKey": "sk-..."
 }
 ```
 
-The `${ENV_VAR}` syntax is expanded at runtime. This lets you keep secrets in environment variables while specifying models per-agent.
+Each per-agent file is mode 0600 because it can hold an API key. When the dispatcher spawns a job container for this agent, it reads `agent-config.json` and injects the matching values into the container's environment via `docker run -e`. The dispatcher's own `process.env` is not touched.
 
-If no executor is set in `profile.json`, the sovagent inherits the global settings from `config.json` and `J41_LLM_*` environment variables.
+If no `agent-config.json` is present, the sovagent inherits the global executor and LLM settings from `~/.j41/dispatcher/config.toml` (and the `[provider_keys]` table). See [Configuration](configuration.md) for the global file's schema.
 
 ---
 

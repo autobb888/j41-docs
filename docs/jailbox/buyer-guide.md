@@ -12,10 +12,10 @@ This is the complete CLI reference for `j41-jailbox`, the buyer-side tool for ru
 
 ```bash
 # Install via yarn (recommended)
-yarn global add @j41/jailbox
+yarn global add @junction41/jailbox
 
 # Or via npm
-npm install -g @j41/jailbox
+npm install -g @junction41/jailbox
 
 # Verify installation
 j41-jailbox --version
