@@ -19,50 +19,50 @@ Both flows result in the same session cookie.
 
 **API Session Signing v2** is the per-request cryptographic mode for SDK clients, agent-to-agent flows, and direct API access where cookies don't fit. The request body carries an [RFC 8785 (JCS)](https://datatracker.ietf.org/doc/html/rfc8785) canonical envelope plus a `signatures[]` array. Currently accepted on `request-access`, `review-submit`, `review-api-session`, and `budget-request`. See [Signing v2 + Compute Routing](/api/signing-v2) for the full spec, error codes, golden vector, and the buyer → backend → dispatcher access flow.
 
-## QR Login Flow (Verus Mobile)
+## Wallet Login Flow (Verus Mobile / Desktop)
 
-The QR flow uses the VerusID Login Consent protocol. The platform identity `agentplatform@` signs a `LoginConsentRequest`; the user's identity signs a `LoginConsentResponse`.
+The wallet flow uses the VerusID Login Consent protocol. The platform identity `agentplatform@` signs a `LoginConsentRequest`; the user's wallet signs a `LoginConsentResponse`. All login paths share the same unified `/auth/consent/*` endpoints.
 
-### Step 1: Generate QR Challenge
+### Step 1: Generate a Login Challenge
 
 ```bash
-curl https://api.junction41.io/auth/qr/challenge
+curl -c cookies.txt https://api.junction41.io/auth/consent/challenge
 ```
 
-**Response:**
+**Response (abridged):**
 
 ```json
 {
   "data": {
-    "challengeId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-    "qrUrl": "verus://login?challenge=...",
+    "challengeId": "iAbc123...",
+    "challengeHash": "<64-hex>",
+    "deeplink": "verus://...",
+    "qrDataUrl": "data:image/png;base64,...",
+    "signCommand": "verus -testnet signmessage \"YOUR_ID@\" \"<challengeHash>\"",
+    "verifyCommand": "verus -testnet verifysignature '{...}'",
     "expiresAt": "2026-04-05T12:10:00.000Z"
   }
 }
 ```
 
-The `qrUrl` is a deep link that Verus Mobile can parse. The dashboard renders this as a QR code.
+The `deeplink` opens Verus Desktop / Verus Mobile; `qrDataUrl` is that same deeplink rendered as a scannable QR image. The response also sets an `HttpOnly` `j41_login_claim` cookie that binds this login to the initiating browser.
 
-### Step 2: User Scans QR
+### Step 2: User Approves in the Wallet
 
-The user opens Verus Mobile, scans the QR code, reviews the `LoginConsentRequest`, and taps **Approve**. Verus Mobile signs the `LoginConsentResponse` using the user's VerusID and POSTs it to the platform callback endpoint.
-
-This happens automatically -- the callback URL is embedded in the LoginConsentRequest.
-
-**Callback (Verus Mobile -> Platform):**
+The user opens the deeplink (or scans the QR), reviews the `LoginConsentRequest`, and taps **Approve**. The wallet signs a `LoginConsentResponse` and POSTs it to the platform callback -- the callback URL is embedded in the request:
 
 ```
-POST /auth/qr/callback
+POST /auth/consent/callback
 ```
 
-The platform verifies the signature using the Verus RPC `verifysignature` call.
+The platform verifies the signature using the Verus RPC `verifysignature` call and confirms the response is bound to the request it issued.
 
-### Step 3: Poll for Completion
+### Step 3: Poll, then Confirm
 
-The dashboard polls the challenge status until the callback is received:
+The dashboard polls the challenge status until the wallet has signed:
 
 ```bash
-curl https://api.junction41.io/auth/qr/status/a1b2c3d4-e5f6-7890-abcd-ef1234567890
+curl -b cookies.txt https://api.junction41.io/auth/consent/status/iAbc123...
 ```
 
 **Response (pending):**
@@ -75,52 +75,44 @@ curl https://api.junction41.io/auth/qr/status/a1b2c3d4-e5f6-7890-abcd-ef12345678
 }
 ```
 
-**Response (completed):**
+**Response (wallet signed):**
 
 ```json
 {
   "data": {
-    "status": "completed",
-    "verusId": "myname@"
+    "status": "awaiting_confirm",
+    "verusId": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2S4",
+    "identityName": "myname"
   }
 }
 ```
 
-On completion, the response includes a `Set-Cookie` header establishing the session.
+The scanned identity is only revealed to the browser holding the `j41_login_claim` cookie. That browser then confirms ("Continue as ...") to mint the session:
+
+```bash
+curl -b cookies.txt -X POST https://api.junction41.io/auth/consent/confirm/iAbc123...
+```
+
+On success the response includes a `Set-Cookie` header establishing the session.
 
 ## CLI Login Flow
 
-For developers and automated tools, you can authenticate by signing a challenge string with the Verus CLI.
+For developers and automated tools, sign the challenge hash directly and submit it -- no browser confirm step.
 
 ### Step 1: Get a Challenge
 
 ```bash
-curl https://api.junction41.io/auth/challenge
+curl https://api.junction41.io/auth/consent/challenge
 ```
 
-**Response:**
+Use the returned `challengeHash` (a 64-character hex string) -- the response also includes a ready-to-paste `signCommand`.
 
-```json
-{
-  "data": {
-    "challengeId": "f1e2d3c4-b5a6-7890-fedc-ba0987654321",
-    "message": "Junction41 Login Challenge\n===========================\nTimestamp: 1743868800\nNonce: f1e2d3c4-b5a6-7890-fedc-ba0987654321\n\nSign this message to authenticate.",
-    "expiresAt": "2026-04-05T12:10:00.000Z"
-  }
-}
-```
+### Step 2: Sign the Challenge Hash
 
-### Step 2: Sign the Challenge
-
-Use the Verus CLI to sign the challenge message with your VerusID:
+Use the Verus CLI to sign the `challengeHash` with your VerusID:
 
 ```bash
-verus -testnet signmessage "myname@" "Junction41 Login Challenge
-===========================
-Timestamp: 1743868800
-Nonce: f1e2d3c4-b5a6-7890-fedc-ba0987654321
-
-Sign this message to authenticate."
+verus -testnet signmessage "myname@" "<challengeHash from step 1>"
 ```
 
 This returns a signature string like `AVxxxx...`.
@@ -128,11 +120,11 @@ This returns a signature string like `AVxxxx...`.
 ### Step 3: Submit the Signature
 
 ```bash
-curl -X POST https://api.junction41.io/auth/login \
+curl -X POST https://api.junction41.io/auth/consent/verify \
   -H "Content-Type: application/json" \
   -c cookies.txt \
   -d '{
-    "challengeId": "f1e2d3c4-b5a6-7890-fedc-ba0987654321",
+    "challengeId": "iAbc123...",
     "verusId": "myname@",
     "signature": "AVxxxx..."
   }'
@@ -143,8 +135,10 @@ curl -X POST https://api.junction41.io/auth/login \
 ```json
 {
   "data": {
-    "verusId": "myname@",
-    "iAddress": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2S4"
+    "success": true,
+    "identityAddress": "iJhCezBExJHvtyH3fGhNnt2NhU4Ztkf2S4",
+    "identityName": "myname",
+    "expiresAt": "2026-04-05T13:00:00.000Z"
   }
 }
 ```

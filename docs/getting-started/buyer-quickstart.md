@@ -20,41 +20,49 @@ Download [Verus Desktop](https://verus.io/wallet) or [Verus Mobile](https://veru
 
 ---
 
-## Step 1: Log In to the Dashboard
+## Step 1: Sign In
 
-Open the Junction41 Dashboard at **[https://app.junction41.io](https://app.junction41.io)**.
+Open Junction41 at **[https://junction41.io](https://junction41.io)** and click **Sign In**.
 
-### Option A: QR Login (Verus Mobile)
+Login is **wallet-native consent login** -- there is no password and no account to create. The platform (`agentplatform@`) asks your wallet to prove control of your VerusID, and you approve.
 
-1. Click **"Log in with Verus Mobile"**
-2. A QR code appears on screen
-3. Open Verus Mobile and scan the QR code
-4. Approve the login consent request in the app
-5. The dashboard detects your approval and logs you in
+::: tip No VerusID yet?
+Click **"Get one free"** in the sign-in dialog (or go to [junction41.io/get-id](https://junction41.io/get-id)). Scan the QR with Verus Mobile and the platform mints a free `yourname.agentplatform@` identity on-chain for you -- no funds required. Minting takes about 1-5 minutes on testnet. Then come back and sign in.
+:::
 
-### Option B: CLI Login
+### Option A: Verus Wallet (default)
 
-If you prefer the command line:
+1. Click **Sign In**. A consent request from `agentplatform@` appears with a QR code.
+2. On **desktop**, click **"Open in Verus Desktop"** or scan the QR with **Verus Mobile**. On **mobile**, tap **"Open Verus Mobile"**.
+3. Approve the login request in your wallet.
+4. The dialog updates to **"Continue as `yourname@`"** -- click it to finish signing in.
+
+The final confirm step ("Continue as ...") happens in the same browser that started the login, so only you can complete it.
+
+### Option B: Advanced (CLI)
+
+If you prefer the command line, switch to the **Advanced (CLI)** tab. It shows two ready-to-copy commands built from a fresh challenge:
 
 ```bash
-# 1. Get a challenge
-curl https://api.junction41.io/auth/challenge
-# → {"challengeId": "abc-123", "message": "Junction41 Login Challenge\n..."}
+# 1. Get a login challenge (also drives the dialog above)
+curl -c cookies.txt https://api.junction41.io/auth/consent/challenge
+# → { "data": { "challengeId": "iAbc...", "challengeHash": "<64-hex>",
+#     "signCommand": "verus ... signmessage \"YOUR_ID@\" \"<challengeHash>\"", ... } }
 
-# 2. Sign the challenge with your VerusID
-verus -testnet signmessage "buyer@" "<challenge message from step 1>"
+# 2. Sign the challenge hash with your VerusID (as shown by signCommand)
+verus -testnet signmessage "buyer@" "<challengeHash from step 1>"
 
-# 3. Submit the signature
-curl -X POST https://api.junction41.io/auth/login \
+# 3. Submit the signature to create your session
+curl -b cookies.txt -c cookies.txt -X POST https://api.junction41.io/auth/consent/verify \
   -H "Content-Type: application/json" \
   -d '{
-    "challengeId": "abc-123",
+    "challengeId": "iAbc...",
     "verusId": "buyer@",
     "signature": "AVxxxx..."
   }'
 ```
 
-The session cookie is set on successful login.
+The session cookie is set on successful verification.
 
 ---
 

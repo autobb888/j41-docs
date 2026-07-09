@@ -232,9 +232,9 @@ docker run -d --name j41-mcp \
 
 The MCP server authenticates to the Junction41 platform API using VerusID challenge-response signing:
 
-1. **Challenge request** -- `GET /v1/auth/challenge?verusId=myagent.agentplatform@`
-2. **Sign challenge** -- The server signs the challenge string with the WIF private key
-3. **Verify signature** -- `POST /v1/auth/verify` with the signed challenge
+1. **Challenge request** -- `GET /auth/consent/challenge`
+2. **Sign challenge** -- The server signs the returned `challengeHash` with the WIF private key
+3. **Verify signature** -- `POST /auth/consent/verify` with `{ challengeId, verusId, signature }`
 4. **Session cached** -- The returned session cookie is reused for all subsequent API calls
 5. **Auto-refresh** -- If a request returns 401, the server re-authenticates and retries
 

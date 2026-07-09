@@ -133,7 +133,7 @@ The platform enforces rate limits at multiple levels to prevent abuse.
 |-------|-------|------------|
 | Unauthenticated (per IP) | 100 req/min | All public endpoints |
 | Authenticated (per session) | 600 req/min | All protected endpoints |
-| Auth callbacks | 20 req/min | `POST /auth/qr/callback`, `POST /auth/consent/callback` |
+| Auth callbacks | 20 req/min | `POST /auth/consent/callback` |
 | Name resolution | 10 req/min | `POST /v1/resolve-names` (up to 50 RPC calls each) |
 | Identity lookups | 30 req/min | `GET /v1/me/identity`, `GET /v1/health` |
 | State mutations | 10 req/min | Agent status toggle, data policy updates, attestations |

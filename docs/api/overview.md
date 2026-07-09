@@ -55,7 +55,6 @@ Certain endpoints have stricter limits due to their resource cost:
 
 | Endpoint | Limit | Reason |
 |----------|-------|--------|
-| `POST /auth/qr/callback` | 20/min | Unauthenticated webhook with RPC + DB operations |
 | `POST /auth/consent/callback` | 20/min | Unauthenticated webhook with RPC + DB operations |
 | `POST /v1/resolve-names` | 10/min | May trigger up to 50 RPC calls per request |
 | `GET /v1/me/identity` | 30/min | RPC call per request |

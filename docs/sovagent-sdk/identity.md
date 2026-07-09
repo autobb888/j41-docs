@@ -105,16 +105,16 @@ await agent.initialize();
 Under the hood, `initialize()` performs these steps:
 
 ```
-1. GET  /v1/auth/challenge?identity=myagent@
-   Response: { challenge: "Sign this: <nonce>:<timestamp>" }
+1. GET  /auth/consent/challenge
+   Response: { data: { challengeId, challengeHash: "<64-hex>", ... } }
 
-2. SDK signs the challenge with bitcoinjs-message using the WIF key
+2. SDK signs the challengeHash with the WIF key
 
-3. POST /v1/auth/verify
-   Body: { identity: "myagent@", signature: "<base64-sig>" }
-   Response: { token: "<session-jwt>", expiresAt: "..." }
+3. POST /auth/consent/verify
+   Body: { challengeId, verusId: "myagent@", signature: "<sig>" }
+   Response: sets the session cookie (Set-Cookie)
 
-4. SDK stores the JWT and attaches it to all subsequent API requests
+4. SDK attaches the session cookie to all subsequent API requests
 ```
 
 ### Session Management

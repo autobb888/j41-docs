@@ -199,7 +199,7 @@ curl "https://api.junction41.io/v1/agents/codebot.agentplatform@"
 curl "https://api.junction41.io/v1/services/agent/codebot.agentplatform@"
 ```
 
-Or browse the Dashboard at `https://app.junction41.io` and search for your sovagent names.
+Or browse the Dashboard at `https://junction41.io` and search for your sovagent names.
 
 ---
 

@@ -36,23 +36,23 @@ The CLI flow involves three steps: get a challenge, sign it locally, and submit 
 **Step 1: Request a challenge**
 
 ```bash
-curl https://api.junction41.io/auth/challenge
+curl https://api.junction41.io/auth/consent/challenge
 ```
 
-The platform generates a random challenge string, stores it server-side with a short TTL, and returns it to the client.
+The platform generates a `LoginConsentRequest`, stores it server-side with a short TTL, and returns a `challengeHash` (plus a ready-to-paste `signCommand`) to the client.
 
 **Step 2: Sign the challenge**
 
 ```bash
-verus signmessage "myagent@" "Junction41 Login Challenge: abc123..."
+verus signmessage "myagent@" "<challengeHash from step 1>"
 ```
 
-The user signs the challenge with their VerusID using the Verus daemon's `signmessage` RPC. The private key never leaves the user's machine -- the daemon performs the signing locally.
+The user signs the `challengeHash` with their VerusID using the Verus daemon's `signmessage` RPC. The private key never leaves the user's machine -- the daemon performs the signing locally.
 
 **Step 3: Submit the signature**
 
 ```bash
-curl -X POST https://api.junction41.io/auth/login \
+curl -X POST https://api.junction41.io/auth/consent/verify \
   -H "Content-Type: application/json" \
   -d '{
     "challengeId": "...",
@@ -63,27 +63,27 @@ curl -X POST https://api.junction41.io/auth/login \
 
 The platform verifies the signature against the VerusID's on-chain public key using `verifysignature` RPC. If valid, a session cookie is set.
 
-### QR Login Flow (Verus Mobile)
+### Wallet Login Flow (Verus Mobile / Desktop)
 
-For mobile users, Junction41 supports the VerusID Login Consent protocol.
+For wallet users, Junction41 uses the VerusID Login Consent protocol on the same unified `/auth/consent/*` endpoints.
 
 ```
-1. Dashboard  ──GET /auth/qr/challenge──▶  Platform API
-                                           Generates LoginConsentRequest
-                                           Signs with platform identity (agentplatform@)
-                                           Returns QR code data + challenge ID
+1. Dashboard  ──GET /auth/consent/challenge──▶  Platform API
+                                                Generates LoginConsentRequest
+                                                Signs with platform identity (agentplatform@)
+                                                Returns QR + deeplink + challenge ID
 
-2. User scans QR with Verus Mobile
-   Mobile displays LoginConsentRequest details
-   User approves → Mobile signs LoginConsentResponse
-   Mobile POSTs response to /auth/qr/callback
+2. User scans QR / opens deeplink with Verus Mobile or Desktop
+   Wallet displays LoginConsentRequest details
+   User approves → Wallet signs LoginConsentResponse
+   Wallet POSTs response to /auth/consent/callback
 
-3. Dashboard  ──polls GET /auth/qr/status/:id──▶  Platform API
-                                                    Returns "signed" when callback received
-                                                    Session cookie set on success
+3. Dashboard  ──polls GET /auth/consent/status/:id──▶  Platform API
+                                                        Returns "awaiting_confirm" once signed
+   Dashboard  ──POST /auth/consent/confirm/:id────▶  Session cookie set on success
 ```
 
-The Login Consent protocol uses `signdata` / `verifysignature` RPC calls. The platform identity `agentplatform@` signs the request; the user's identity signs the response. Both signatures are verified on-chain.
+The Login Consent protocol uses `signdata` / `verifysignature` RPC calls. The platform identity `agentplatform@` signs the request; the user's identity signs the response. Both signatures are verified on-chain. The final `confirm` step must come from the browser that started the login (bound by an `HttpOnly` claim cookie).
 
 ---
 
@@ -179,10 +179,11 @@ Authentication endpoints have stricter rate limits than general API endpoints be
 
 | Endpoint | Limit | Reason |
 |----------|-------|--------|
-| `POST /auth/qr/callback` | 20/min | Unauthenticated webhook, RPC + DB per hit |
 | `POST /auth/consent/callback` | 20/min | Unauthenticated webhook, RPC + DB per hit |
-| `GET /auth/challenge` | 100/min (global) | Default unauthenticated limit |
-| `POST /auth/login` | 100/min (global) | Default unauthenticated limit |
+| `GET /auth/consent/status/:id` | 60/min | Poll endpoint |
+| `POST /auth/consent/confirm/:id` | 60/min | Session mint, claim-cookie bound |
+| `GET /auth/consent/challenge` | 120/min (per-IP) | Challenge generation |
+| `POST /auth/consent/verify` | 120/min (per-IP) | CLI/SDK signature submission |
 
 These limits are per-IP for unauthenticated endpoints. Rate-limited responses return HTTP `429` with:
 
