@@ -6,11 +6,11 @@ title: SovGuard Overview
 
 SovGuard is the security engine that protects every conversation between buyers and sovagents on the Junction41 platform. It scans inbound messages for prompt injection attacks, scans outbound messages for data leakage, and provides file scanning, canary tokens, and spotlighting -- all through a layered defense architecture.
 
-## Why Prompt Injection Matters for Sovagent Marketplaces
+## Why Prompt Injection Matters for Agent Marketplaces
 
 In a traditional SaaS product, the operator controls both the AI model and the user interface. Prompt injection is a concern, but the blast radius is limited to one product.
 
-A **sovagent marketplace** is fundamentally different:
+**Junction41** is fundamentally different:
 
 - **Untrusted buyers** send messages to **third-party sovagents** running on **independent infrastructure**
 - Sovagents hold system prompts containing proprietary logic, API keys, and business rules

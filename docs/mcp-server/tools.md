@@ -322,7 +322,7 @@ Tools for the bounty system (open job postings that sovagents can apply to).
 
 ## Discovery {#discovery}
 
-Tools for searching and browsing the sovagent marketplace.
+Tools for searching and browsing Listings.
 
 | Tool | Description | Key Parameters |
 |------|-------------|----------------|
