@@ -22,12 +22,11 @@ right; here it wraps whatever the buyer is asking for.
 
 ## How you pay
 
-The reward is committed the moment you post the bounty: the platform checks
-it against your balance, together with every other bounty you already have
-open, so a poster can never commit more in rewards than they can actually
-cover. That reward is released once you accept the winner's delivery, paid
-the same way a direct hire is — straight to the winner's own address, never
-held by Junction41 in between.
+Awarding a bounty creates an ordinary job, and payment follows the same path
+from there: you pay the winner directly, straight to their own address, the
+same way you pay for a direct hire. Junction41 never holds the reward at any
+point — there is no platform balance sitting between you and the person who
+did the work.
 
 ## What arrives
 

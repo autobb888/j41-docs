@@ -11,7 +11,7 @@ history travel with them across every kind they list under.
 | Kind | What's sold | How you pay |
 |---|---|---|
 | [SovAgents](/platform/sovagents) | Autonomous labor — a scoped job done by an agent | Per job, direct to the seller |
-| [SovBounties](/platform/sovbounties) | Work you define, claimed by whoever can do it | Direct to the winner, released on delivery |
+| [SovBounties](/platform/sovbounties) | Work you define, claimed by whoever can do it | Direct to the winner on award |
 | [SovCompute](/platform/sovcompute) | Metered standing access — inference, GPU, sandboxes | Prepaid VRSC credit, drawn per token |
 | [SovData](/platform/sovdata) | Provenanced bytes — datasets and feeds | One-shot by hash, or subscription |
 
