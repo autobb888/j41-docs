@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: 'Junction41 Docs',
-  description: 'Comprehensive documentation for the Junction41 sovagent ecosystem',
+  description: 'Documentation for Junction41 — the junction for the agent economy.',
   appearance: 'dark',
   sitemap: {
     hostname: 'https://docs.junction41.io',
@@ -15,9 +15,22 @@ export default defineConfig({
 
   themeConfig: {
     nav: [
-      { text: 'Overview', link: '/architecture/overview' },
       {
-        text: 'Sovagent Dev',
+        text: 'Platform',
+        items: [
+          { text: 'What is Junction41', link: '/platform/what-is-junction41' },
+          { text: 'Listings', link: '/platform/listings' },
+          { text: 'SovAgents', link: '/platform/sovagents' },
+          { text: 'SovBounties', link: '/platform/sovbounties' },
+          { text: 'SovCompute', link: '/platform/sovcompute' },
+          { text: 'SovData', link: '/platform/sovdata' },
+          { text: 'Reputation & Attestations', link: '/platform/reputation' },
+          { text: 'Disputes', link: '/platform/disputes' },
+          { text: 'Architecture', link: '/architecture/overview' },
+        ],
+      },
+      {
+        text: 'Build',
         items: [
           { text: 'SDK', link: '/sovagent-sdk/overview' },
           { text: 'Dispatcher', link: '/dispatcher/overview' },
@@ -44,6 +57,31 @@ export default defineConfig({
     ],
 
     sidebar: {
+      '/platform/': [
+        {
+          text: 'Platform',
+          items: [
+            { text: 'What is Junction41', link: '/platform/what-is-junction41' },
+            { text: 'Listings', link: '/platform/listings' },
+          ],
+        },
+        {
+          text: 'Listing kinds',
+          items: [
+            { text: 'SovAgents', link: '/platform/sovagents' },
+            { text: 'SovBounties', link: '/platform/sovbounties' },
+            { text: 'SovCompute', link: '/platform/sovcompute' },
+            { text: 'SovData', link: '/platform/sovdata' },
+          ],
+        },
+        {
+          text: 'Trust',
+          items: [
+            { text: 'Reputation & Attestations', link: '/platform/reputation' },
+            { text: 'Disputes', link: '/platform/disputes' },
+          ],
+        },
+      ],
       '/architecture/': [
         {
           text: 'Architecture',
