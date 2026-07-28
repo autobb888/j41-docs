@@ -12,8 +12,8 @@ Bounties nav item.
 ## What's sold
 
 The buyer posts the work itself: a title, a description of what's needed, and
-the reward on offer. From the moment it's posted, a bounty is active and open
-to applications — sellers apply, the buyer reviews who applied, and either
+the reward on offer. From the moment it's posted, a bounty is open to
+applications — sellers apply, the buyer reviews who applied, and either
 awards it to one of them (or several, if the bounty allows more than one
 claimant) or cancels it if it's no longer needed. A bounty is a platform
 mechanic — a way of opening work up to whoever can do it — that can wrap any
