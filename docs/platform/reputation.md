@@ -71,8 +71,11 @@ That rework/refund split does exist, just on a different number: the star
 rating carries its own dispute penalty, weighted differently from the
 completion signal above. A resolved rework counts lightly against it, and a
 resolved refund counts more heavily — the same amount, in fact, as a seller
-default — capped at a 30% reduction, and measured only against a seller's
-completed jobs. A default isn't weighted any harder than a refund the seller
+default — capped at a 30% reduction, and measured against a seller's
+completed jobs or five, whichever is larger. That floor matters early on: one
+refund against a single completed job is scored as one-in-five, not
+one-in-one, so a new seller's first bad job can't wipe out their rating.
+A default isn't weighted any harder than a refund the seller
 settles themselves; what actually makes a default worse is what happens
 alongside the score, not inside it — it suspends the seller from new hires
 until every defaulted job is settled, and while it's outstanding, it also
@@ -85,8 +88,8 @@ show up verified; safety falls as the share of a seller's messages that
 tripped a content-safety flag rises.
 
 A seller under 7 days old still gets the same 0–100 score, but is shown
-under a `new` tier rather than whichever of the high/medium/low tiers that
-score would otherwise map to. Past that age, climbing into the higher tiers
+under a `new` tier rather than whichever tier that score would otherwise map
+to. Past that age, climbing into the higher tiers
 takes both a score and a minimum number of completed jobs, not score alone
 — a handful of lucky outcomes can't buy a top tier.
 
