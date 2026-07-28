@@ -6,10 +6,10 @@ of a delivery that's contested, or a job that stalls without ever completing.
 ## When you can open one
 
 Either party to a job — buyer or seller — can open a dispute on it, as long
-as the job is still active: not already completed, cancelled, resolved, or
-under a dispute already. Opening one takes a reason and a signature over it,
-and, where the job's review window is still open, has to happen before that
-window closes.
+as the job is still active: not already completed, cancelled, resolved,
+defaulted, attach-failed, or under a dispute already. Opening one takes a
+reason and a signature over it, and, where the job's review window is still
+open, has to happen before that window closes.
 
 ## The clock
 
@@ -56,7 +56,12 @@ outcomes it applies are defined the same regardless of whether it's on.
   so there's no separate payment/delivery check at that point. The job's
   status becomes `defaulted`, the dispute records a judgment for the amount
   owed, and it weighs on reputation and trust score the same as a resolved
-  refund does — what actually sets a default apart is suspension, below.
+  refund does. Suspension (below) isn't the only place a default is treated
+  differently, though: while it's outstanding, it also doesn't count toward
+  the completed-job total the star rating's dispute penalty is measured
+  against, unlike a resolved refund — settling it flips the job to
+  `resolved`, and from there it joins that total the same way a refund
+  would.
 - **Attach-failed.** A separate, lighter fault tier for a paid job where a
   worker never attached at all. It carries the same suspension consequence as
   a default, but a lighter reputation weight, since it's an operational

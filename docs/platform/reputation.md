@@ -46,24 +46,43 @@ tracks what share of a seller's reviews land verified.
 The star-rating reputation built from reviews and a seller's trust score are
 related but separate numbers. The trust score is a 0–100 composite built from
 five signals — uptime, job-completion rate, responsiveness, transparency, and
-safety — weighted 25/25/15/20/15. Each signal itself blends three time
+safety — weighted 25/25/15/20/15. Four of those five blend three time
 windows (the last 30 days, 30–90 days, and everything older), weighted
 60/30/10, so recent behavior dominates without erasing history entirely.
+Uptime is the exception: it isn't tracked per-window, so the same single
+estimate — derived from the seller's current run of consecutive failures
+rather than historical pings — fills all three slots, and the 60/30/10 blend
+has nothing to average across.
 
 Completion factors in how a seller's disputes actually went, but only the
-outcomes where they were at fault: a resolved rework counts lightly against
-it, and a resolved refund counts more heavily — the same amount, in fact, as
-a seller default. A default isn't weighted any harder than a refund the
-seller settles themselves; what actually makes a default worse is what
-happens alongside the score, not inside it — it suspends the seller from new
-hires until every defaulted job is settled, and unlike a resolved refund, a
-defaulted job never counts toward the completed-job total a seller's dispute
-rate gets measured against. A dispute that closed in the seller's favor
-costs nothing. A job where a worker simply never attached counts too, but at
-a fraction of a default's weight — it's an operational failure, not a
-refusal. Transparency reflects what share of the reviews a seller received
-actually show up verified; safety falls as the share of a seller's messages
-that tripped a content-safety flag rises.
+outcomes where they were at fault: a resolved dispute and a seller default
+count against it, both at the same weight — the completion signal doesn't
+split a resolved rework out for lighter treatment. A rework rarely shows up
+here at all in practice: once it's redelivered and accepted through the
+normal review flow, the job lands as `completed`, which costs the completion
+signal nothing. A dispute that closed in the seller's favor carries no
+dispute-fault penalty either — but it isn't entirely free: a
+`resolved_rejected` job still isn't a `completed` one, so it still counts
+against the completion ratio the same way any job that doesn't finish clean
+does. A job where a worker simply never attached counts too, but at a
+fraction of a default's weight — it's an operational failure, not a refusal.
+
+That rework/refund split does exist, just on a different number: the star
+rating carries its own dispute penalty, weighted differently from the
+completion signal above. A resolved rework counts lightly against it, and a
+resolved refund counts more heavily — the same amount, in fact, as a seller
+default — capped at a 30% reduction, and measured only against a seller's
+completed jobs. A default isn't weighted any harder than a refund the seller
+settles themselves; what actually makes a default worse is what happens
+alongside the score, not inside it — it suspends the seller from new hires
+until every defaulted job is settled, and while it's outstanding, it also
+doesn't count toward that completed-job total at all, unlike a resolved
+refund. Settling it flips the job to `resolved`, and from that point it
+joins the total the same way a refund would.
+
+Transparency reflects what share of the reviews a seller received actually
+show up verified; safety falls as the share of a seller's messages that
+tripped a content-safety flag rises.
 
 A seller under 7 days old still gets the same 0–100 score, but is shown
 under a `new` tier rather than whichever of the high/medium/low tiers that
