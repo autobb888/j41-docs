@@ -23,30 +23,40 @@ accept or decline it; once the buyer accepts, the seller is on the clock
 again to redeliver.
 
 A periodic sweep — not an instant reaction the moment a deadline ticks over —
-checks for dispute deadlines (plus a short grace window) that have passed and
-applies the outcome below. That sweep runs under its own platform
-configuration switch; the deadlines, the fact-gate, and the outcomes
-themselves are the same either way.
+checks for dispute deadlines (plus a short grace window) that have passed
+and applies the outcome below, but only while its own platform
+configuration switch is turned on; with the switch off, the sweep does
+nothing and nothing resolves automatically. Toggling that switch doesn't
+change the rules themselves — the deadlines, the fact-gate, and the
+outcomes it applies are defined the same regardless of whether it's on.
 
 ## Outcomes
 
 - **Rejected.** The seller disputes the claim, or the sweep closes it in the
   seller's favor because a delivery is already on record. Either way the job
-  lands as `resolved_rejected` and it's a neutral outcome — no reputation
-  penalty on any surface.
+  lands as `resolved_rejected` and carries no dispute-fault penalty — losing
+  a dispute costs a seller, winning one doesn't. It isn't entirely free,
+  though: a `resolved_rejected` job still isn't a `completed` one, so it
+  still counts against the completion ratio the same way any job that
+  doesn't finish clean does.
 - **A rework offer the buyer never answers** closes the same way, with no
-  penalty — the buyer simply let it lapse.
+  dispute-fault penalty — the buyer simply let it lapse.
 - **Refunded.** The seller commits to a percentage refund and later submits a
   confirmed transaction covering it (see Refunds below); the dispute settles.
 - **Redelivered.** The buyer accepts a rework offer, the seller redelivers,
   and the job proceeds through the normal review flow from there.
-- **Defaulted.** The worst outcome, and it's fact-gated, never
-  silence-gated: it only fires when payment is verified, there's no delivery
-  on record, and the seller never responded — or committed to a refund and
-  never sent it, or had an accepted rework and never redelivered — past the
-  deadline. The job's status becomes `defaulted`, the dispute records a
-  judgment for the amount owed, and it's the single heaviest hit reputation
-  and trust score can take.
+- **Defaulted.** The worst outcome, and how it's reached depends on whose
+  move it was. If the seller still owed an initial response, a default only
+  fires once payment is verified, there's no delivery on record, and the
+  seller stayed silent past the deadline — and never fires if the seller is
+  the one who raised the dispute, since a seller waiting on the buyer can't
+  be defaulted for it. If the seller had already committed to a refund or
+  had an accepted rework outstanding, missing that deadline defaults them
+  directly — the commitment already on record is the fact being enforced,
+  so there's no separate payment/delivery check at that point. The job's
+  status becomes `defaulted`, the dispute records a judgment for the amount
+  owed, and it weighs on reputation and trust score the same as a resolved
+  refund does — what actually sets a default apart is suspension, below.
 - **Attach-failed.** A separate, lighter fault tier for a paid job where a
   worker never attached at all. It carries the same suspension consequence as
   a default, but a lighter reputation weight, since it's an operational
@@ -69,8 +79,10 @@ transaction ID. Before that settles anything, the platform checks it
 on-chain: the transaction can't have been used for a payment or refund
 before, it has to cover at least 99% of what's owed, and it needs enough
 confirmations for its size — the same tiers that gate an incoming job
-payment. A settlement is accepted only once all three hold; a 0-confirmation
-or short-paid transaction doesn't count.
+payment, so a refund under 2 VRSC settles as soon as it's in the mempool
+while a larger one waits for one or six blocks. A settlement is accepted
+only once all three checks hold; a reused or short-paid transaction never
+counts, no matter how many confirmations it has.
 
 ## Abuse in the other direction
 
@@ -80,10 +92,11 @@ buyer has opened 5 or more disputes, and fewer than 1 in 4 of them actually
 resulted in a refund or a seller default, they're flagged. Today that signal
 surfaces in platform logs when the sweep closes one of their disputes with
 no penalty — it doesn't change what that buyer can do, and it isn't shown to
-either party. It exists so a buyer can't bury a seller in cost-free,
-meritless disputes: a rejected dispute already costs the seller nothing on
-any surface, which is what makes filing one "free" for the buyer worth
-watching for.
+either party. It exists so a buyer can't bury a seller in disputes that cost
+the buyer nothing to file: a rejected dispute carries no dispute-fault
+penalty for the seller, but it still isn't free for them — it dents the
+completion ratio like any job that doesn't close clean — which is exactly
+why a buyer who files a lot of them and rarely wins is worth watching for.
 
 ## Go deeper
 

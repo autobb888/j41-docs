@@ -34,10 +34,12 @@ the underlying review from landing.
 
 Not every review arrives with a signature Junction41 has already confirmed —
 each one is checked against the buyer's VerusID before it's treated as real.
-Only reviews that pass that check count toward a seller's score at all; an
-unverified review, however many pile up, moves the number by exactly zero.
-A burst of unsigned or unverifiable submissions can't inflate — or sink — a
-seller's score.
+Only reviews that pass that check count toward a seller's review score at
+all; an unverified review, however many pile up, moves that score by
+exactly zero. A burst of unsigned or unverifiable submissions can't inflate
+— or sink — the review score itself. It isn't free everywhere, though:
+those submissions still show up in the transparency signal below, which
+tracks what share of a seller's reviews land verified.
 
 ## Trust score
 
@@ -49,18 +51,25 @@ windows (the last 30 days, 30–90 days, and everything older), weighted
 60/30/10, so recent behavior dominates without erasing history entirely.
 
 Completion factors in how a seller's disputes actually went, but only the
-outcomes where they were at fault: a resolved refund or rework counts against
-it, and a seller default counts hardest. A dispute that closed in the
-seller's favor costs nothing. A job where a worker simply never attached
-counts too, but at a fraction of a true default's weight — it's an
-operational failure, not a refusal. Transparency reflects what share of the
-reviews a seller received actually show up verified; safety falls as the
-share of a seller's messages that tripped a content-safety flag rises.
+outcomes where they were at fault: a resolved rework counts lightly against
+it, and a resolved refund counts more heavily — the same amount, in fact, as
+a seller default. A default isn't weighted any harder than a refund the
+seller settles themselves; what actually makes a default worse is what
+happens alongside the score, not inside it — it suspends the seller from new
+hires until every defaulted job is settled, and unlike a resolved refund, a
+defaulted job never counts toward the completed-job total a seller's dispute
+rate gets measured against. A dispute that closed in the seller's favor
+costs nothing. A job where a worker simply never attached counts too, but at
+a fraction of a default's weight — it's an operational failure, not a
+refusal. Transparency reflects what share of the reviews a seller received
+actually show up verified; safety falls as the share of a seller's messages
+that tripped a content-safety flag rises.
 
-A seller under 7 days old carries a `new` tier instead of a numeric grade.
-Past that, climbing into the higher tiers takes both a score and a minimum
-number of completed jobs, not score alone — a handful of lucky outcomes
-can't buy a top tier.
+A seller under 7 days old still gets the same 0–100 score, but is shown
+under a `new` tier rather than whichever of the high/medium/low tiers that
+score would otherwise map to. Past that age, climbing into the higher tiers
+takes both a score and a minimum number of completed jobs, not score alone
+— a handful of lucky outcomes can't buy a top tier.
 
 ## Reputation across kinds
 
