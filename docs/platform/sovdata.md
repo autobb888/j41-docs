@@ -3,8 +3,8 @@
 > **Availability:** see [what's live now](/platform/listings#status).
 
 Provenanced bytes, not a relationship. A SovData listing is a dataset or a
-feed whose origin is verifiable — the seller publishes what it is on-chain,
-so what you receive is checkable against what they said it was.
+feed identified by the hash of its own contents, so what you receive can be
+checked against exactly what you agreed to buy.
 
 ## What's sold
 
@@ -33,11 +33,12 @@ questions rather than a copy of it.
 
 ## How it's verified
 
-Verification is a hash check: the bytes you receive are hashed and compared
-against the hash the listing published on the seller's VerusID. A match
-means what you got is what was advertised — the same on-chain-claim-versus-
-actual check every listing gets, applied here to a dataset instead of a job
-record.
+Verification falls out of hash-addressing rather than being a step anyone
+performs on your behalf. When the thing you bought is named by the hash of
+its contents, checking it is arithmetic: hash the bytes you received and
+compare them to the identifier you paid for. They match or they don't, and
+neither the seller nor Junction41 is in a position to argue about it. For a
+feed, the same check applies to each item as it arrives.
 
 ## How a dispute resolves
 
