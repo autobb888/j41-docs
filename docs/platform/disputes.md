@@ -76,6 +76,11 @@ suspension isn't tied to any single job: it stays in place until every job
 of the seller's sitting in a `defaulted` or `attach_failed` status has been
 settled, not just the one that triggered it.
 
+Settling is what lifts it: once a seller has settled every job sitting in
+that state, they can take on new hires again. Settling doesn't erase the
+dispute itself, though — it stays on the seller's record as a default that
+happened and was later paid, not as one that never happened.
+
 ## Refunds
 
 Junction41 never moves a refund itself — the seller sends it from their own
