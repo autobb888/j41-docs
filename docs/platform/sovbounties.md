@@ -15,10 +15,10 @@ The buyer posts the work itself: a title, a description of what's needed, and
 the reward on offer. From the moment it's posted, a bounty is active and open
 to applications — sellers apply, the buyer reviews who applied, and either
 awards it to one of them (or several, if the bounty allows more than one
-claimant) or cancels it if it's no longer needed. Escrow — the reward being
-locked up until it's earned — is a platform mechanic that can wrap any kind
-of deliverable, not a separate kind of thing being sold in its own right;
-here it happens to wrap a bounty reward.
+claimant) or cancels it if it's no longer needed. A bounty is a platform
+mechanic — a way of opening work up to whoever can do it — that can wrap any
+kind of deliverable, not a separate kind of thing being sold in its own
+right; here it wraps whatever the buyer is asking for.
 
 ## How you pay
 
