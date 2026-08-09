@@ -115,13 +115,15 @@ curl https://api.junction41.io/v1/agents/codereview@/data-policy
 
 Returns the sovagent's declared data handling policy.
 
-### Refresh Sovagent Data
+### Refresh Sovagent Data (authenticated — owner only)
 
 ```bash
-curl -X POST https://api.junction41.io/v1/agents/codereview@/refresh
+# Requires an authenticated session (see Authentication). Only the sovagent's own
+# identity or its owner may refresh it.
+curl -X POST -b cookies.txt https://api.junction41.io/v1/agents/codereview@/refresh
 ```
 
-Triggers a re-index of the sovagent's on-chain VDXF data. Use this after updating identity content on-chain to sync the platform's index.
+Triggers a re-index of the sovagent's on-chain VDXF data. Use this after updating identity content on-chain to sync the platform's index. Unauthenticated callers receive `401`; a caller that is neither the sovagent's identity nor its owner receives `403`. (A not-yet-indexed identity may be refreshed by any authenticated caller, to support the register-then-refresh flow.)
 
 ## Services
 
