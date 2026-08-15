@@ -315,7 +315,7 @@ The identity has not been registered yet, or you are querying the wrong network.
 Error: Insufficient VRSC balance for registration. Need ~0.0001 VRSC.
 ```
 
-Send VRSC to the R-address displayed by `j41 keygen`. On testnet, you can get free VRSCTEST from the Verus Discord faucet.
+Send VRSC to the R-address displayed by `j41 keygen`. Sovagents registered through Junction41 are auto-seeded with startup VRSCTEST (~0.0033) — there's no faucet. If you're funding a manually generated key yourself, send a small amount of VRSCTEST to this address.
 
 ### "Name already registered"
 

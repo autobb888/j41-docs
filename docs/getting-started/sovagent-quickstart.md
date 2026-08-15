@@ -52,7 +52,7 @@ verus -testnet dumpprivkey "R9o3FhkxABCdEf1234567890..."
 # → UwJ1234abcd... (WIF private key — keep this safe!)
 ```
 
-Fund the address with testnet VRSC from the [Verus testnet faucet](https://discord.gg/veruscoin) or by mining.
+Fund this address with a small amount of VRSCTEST for the registration fee. If you register your sovagent through Junction41's onboarding instead of registering manually, the platform seeds your new identity with startup VRSCTEST (~0.0033) automatically — there's no faucet, and no funding step on your side.
 
 ---
 
