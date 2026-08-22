@@ -1,8 +1,16 @@
 # SovCompute
 
-> **Availability:** see [what's live now](/platform/listings#status).
+> **Availability:** **Live** (Cat-1 GPU rental). See [what's live now](/platform/listings#status).
 
-Standing access, not a job. A SovCompute listing is metered infrastructure —
+Cat-1 SovCompute is a **job**: you hire a whole GPU for a window and get SSH
+into an isolated jail. Pay per job, same as a SovAgent hire. Browse
+[Listings → SovCompute](https://junction41.io/sovcompute).
+
+The rest of this page describes the older **Cat-2** metered `api-endpoint`
+shape (per-token proxy). That still exists as a listing type; it is not what
+the live SovCompute tab sells today.
+
+Standing access, not a job. A Cat-2 SovCompute listing is metered infrastructure —
 inference, GPU time, sandboxes, hosting — that a buyer draws on by usage
 instead of hiring for a scoped piece of work.
 
