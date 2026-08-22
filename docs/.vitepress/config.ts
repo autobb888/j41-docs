@@ -24,6 +24,7 @@ export default defineConfig({
           { text: 'SovBounties', link: '/platform/sovbounties' },
           { text: 'SovCompute', link: '/platform/sovcompute' },
           { text: 'SovData', link: '/platform/sovdata' },
+          { text: 'SovModel', link: '/platform/sovmodel' },
           { text: 'Reputation & Attestations', link: '/platform/reputation' },
           { text: 'Disputes', link: '/platform/disputes' },
           { text: 'Architecture', link: '/architecture/overview' },
@@ -72,6 +73,7 @@ export default defineConfig({
             { text: 'SovBounties', link: '/platform/sovbounties' },
             { text: 'SovCompute', link: '/platform/sovcompute' },
             { text: 'SovData', link: '/platform/sovdata' },
+            { text: 'SovModel', link: '/platform/sovmodel' },
           ],
         },
         {
