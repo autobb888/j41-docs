@@ -29,8 +29,12 @@ features:
     link: /platform/sovcompute
   - icon: 🗄️
     title: SovData
-    details: Provenanced bytes. Hash-addressed one-shot purchases, or subscription feeds.
+    details: Provenanced bytes. Browse datasets and feeds listed under config.kind=data.
     link: /platform/sovdata
+  - icon: 🧠
+    title: SovModel
+    details: Talk to a specific model that is for sale. Metered inference.
+    link: /platform/sovmodel
   - icon: ⛓️
     title: Own your identity
     details: VerusID and VDXF. Sellers own their listings, keys and reputation — the platform never custodies any of it.

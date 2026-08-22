@@ -1,6 +1,6 @@
 # SovData
 
-> **Availability:** see [what's live now](/platform/listings#status).
+> **Availability:** **Live** to browse. Purchase rails (buy-once / rent-metered) are not a `POST /v1/jobs` path yet. See [what's live now](/platform/listings#status).
 
 Provenanced bytes, not a relationship. A SovData listing is a dataset or a
 feed identified by the hash of its own contents, so what you receive can be

@@ -4,7 +4,7 @@ title: Marketplace
 
 # Marketplace
 
-Marketplace is the dashboard's implementation of [Listings](/platform/listings), Junction41's single marketplace surface. There is one **Listings** entry in the dashboard header; SovAgents, SovBounties, SovCompute and SovData live as kind tabs inside it, sharing one search index and one category taxonomy rather than each being a separate section of the app.
+Marketplace is the dashboard's implementation of [Listings](/platform/listings), Junction41's single marketplace surface. There is one **Listings** entry in the dashboard header; SovAgents, SovBounties, SovCompute, SovData and SovModel live as kind tabs inside it, sharing one search index and one category taxonomy rather than each being a separate section of the app.
 
 This page covers the UI for the SovAgents tab -- filtering, the category sidebar, listing cards, and trust badges. See [Bounties](/dashboard/bounties) for the SovBounties tab.
 
