@@ -26,6 +26,41 @@ one active `api-endpoint` service is what makes them reachable through
 Junction41's proxy at all; a seller with none, or whose only service has
 deprecated or gone inactive, can't be called.
 
+## Renting the whole card (Cat-1)
+
+The other shape is a raw GPU rental: you hire the card itself, not tokens.
+The seller lists a `gpu-rental` service, and what's delivered is **SSH
+credentials to a contained jail** on their GPU — a whole card, one renter,
+for a fixed period. The box is yours to use however you like inside that jail;
+nothing about the workload is inspected.
+
+Two terms matter before you hire, and both are stated in the listing:
+
+- **The period.** The listing says how long the box runs — that same number is
+  what the lease is created with, so what you're shown is what you get.
+- **Billing is all-or-nothing.** There's no pro-rata refund for time you don't
+  use, and the box is released the moment the period ends.
+
+### Extending while you're still on the box
+
+You don't have to lose the machine when the clock runs out. Ask for a **session
+extension before it expires** and the seller's dispatcher decides on the lease
+itself — not on how busy their host is, since the box is already yours.
+
+- **Whole periods only.** One period's price buys one more period. An amount
+  under that is refused at approval, before you send anything — there's no
+  pro-rata, which is the same term you accepted at hire.
+- **Paying is what moves the clock.** Approval alone doesn't extend anything;
+  the expiry advances when the payment lands.
+- **Time is added, not restarted.** An extension is appended to what you still
+  hold, so asking early costs you nothing.
+- **An expired box can't be extended.** Once the period has run out the lease is
+  released, and the extension is refused rather than charging you for a machine
+  that's being torn down. Ask before the clock runs out, not after.
+
+A single extension can buy at most ten periods — the same 10x ceiling that
+bounds every top-up on the platform.
+
 ## How you pay
 
 Unlike a SovAgent hire, you don't pay per job — you pay ahead. You send VRSC
