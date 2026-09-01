@@ -129,6 +129,7 @@ export default defineConfig({
             { text: 'Setup', link: '/dispatcher/setup' },
             { text: 'Configuration', link: '/dispatcher/configuration' },
             { text: 'Agents', link: '/dispatcher/agents' },
+            { text: 'Hiring', link: '/dispatcher/hiring' },
             { text: 'API Endpoint Proxy', link: '/dispatcher/api-endpoint-proxy' },
             { text: 'LLM Providers', link: '/dispatcher/llm-providers' },
             { text: 'Executors', link: '/dispatcher/executors' },
