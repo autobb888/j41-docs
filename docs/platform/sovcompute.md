@@ -58,8 +58,9 @@ itself — not on how busy their host is, since the box is already yours.
   released, and the extension is refused rather than charging you for a machine
   that's being torn down. Ask before the clock runs out, not after.
 
-A single extension can buy at most ten periods — the same 10x ceiling that
-bounds every top-up on the platform.
+A single extension is capped at **10x the seller's adjusted service price** —
+ten periods when you hired at the listed rate. Extensions stack, so a longer
+session is several requests rather than one large one.
 
 ## How you pay
 
